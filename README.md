@@ -1,195 +1,82 @@
-Task 1: End-to-End Machine Learning Pipeline with Scikit-learn
-Objective
+# End-to-End Machine Learning Projects
 
-Develop a robust and reusable machine learning pipeline to predict customer churn using the Telco Customer Churn dataset. The solution follows an end-to-end workflow, including data preprocessing, model training, hyperparameter tuning, evaluation, and model persistence.
+This repository contains three machine learning projects covering traditional ML, multimodal deep learning, and NLP using BERT.
 
-Dataset
+---
 
-Dataset: Telco Customer Churn
+# Task 1: Customer Churn Prediction
 
-The dataset contains customer demographic details, service subscriptions, and account-related information that can be used to predict whether a customer is likely to leave the service.
+## Objective
 
-Data Preprocessing
-Removed missing values and duplicate records to ensure data quality.
-Applied One-Hot Encoding to transform categorical variables into numerical representations.
-Standardized numerical features using StandardScaler.
-Combined all preprocessing operations through a ColumnTransformer integrated within a Scikit-learn Pipeline.
-Model Development
+Develop a reusable machine learning pipeline to predict customer churn using the Telco Customer Churn dataset.
 
-Two classification models were implemented:
+## Dataset
 
-Logistic Regression
-Random Forest Classifier
+**Dataset:** Telco Customer Churn
 
-Each model was incorporated into a complete pipeline, enabling seamless preprocessing, training, and prediction.
+The dataset contains customer demographic details, service subscriptions, and account-related information.
 
-Hyperparameter Optimization
+## Data Preprocessing
 
-GridSearchCV was used to identify the optimal set of hyperparameters.
+- Removed missing values and duplicate records
+- Applied One-Hot Encoding
+- Standardized numerical features using StandardScaler
+- Built preprocessing pipeline using ColumnTransformer
 
-Logistic Regression
-Regularization strengths (C)
-Penalty types
-Solver configurations
-Random Forest
-Number of estimators
-Maximum tree depth
-Feature selection strategies
-Model Performance
-Model	Accuracy
-Logistic Regression	~81.9%
-Random Forest	~73.5%
+## Models
 
-The Logistic Regression model achieved superior performance and demonstrated better generalization on unseen data.
+- Logistic Regression
+- Random Forest Classifier
 
-Model Saving
+## Results
 
-The best-performing models were exported using Joblib for future deployment and inference:
+| Model | Accuracy |
+|--------|----------|
+| Logistic Regression | 81.9% |
+| Random Forest | 73.5% |
 
-logistic_regression_churn.pkl
-random_forest_churn.pkl
-Task 2: Multimodal Machine Learning for Housing Price Prediction
-Objective
+---
 
-Build a multimodal deep learning model capable of predicting housing prices by combining structured tabular features with visual information extracted from house images.
+# Task 2: Housing Price Prediction using Images and Tabular Data
 
-Dataset
-Structured Data
+## Objective
 
-Housing sales dataset containing features such as:
+Build a multimodal deep learning model using image and structured data.
 
-Square Footage
-Number of Bedrooms
-Number of Bathrooms
-City Codes
-Image Data
+## Features
 
-Property images stored in the custom socal_pics/ dataset.
+- CNN for image processing
+- Dense Network for tabular features
+- Feature Fusion using Concatenate Layer
 
-Each property record is linked to its corresponding image through a unique image_id.
+## Results
 
-Data Preparation
-Created an image_path column to connect tabular records with image files.
-Split the dataset into training (80%) and validation (20%) subsets.
-Selected key numerical features:
-sqft
-bed
-bath
-n_citi
-Utilized ImageDataGenerator for image preprocessing and normalization.
-Feature Fusion Strategy
+| Metric | Training | Validation |
+|----------|----------|------------|
+| MAE | 696K USD | 703K USD |
+| RMSE | 785K USD | 796K USD |
 
-A custom data generator was developed to synchronize image and tabular inputs during training.
+---
 
-The model consists of:
+# Task 3: News Topic Classification using BERT
 
-Image Branch
-Convolutional Neural Network (CNN)
-Two convolutional layers with ReLU activation
-Max Pooling layers
-Flatten layer for feature extraction
-Tabular Branch
-Dense layers
-Batch Normalization
-Dropout regularization
-Fusion Layer
+## Objective
 
-Both feature streams are merged using a Concatenate layer before passing through fully connected layers for final price prediction.
+Fine-tune BERT on the AG News dataset to classify news headlines.
 
-Model Configuration
-Optimizer: Adam
-Loss Function: Mean Squared Error (MSE)
-Metrics:
-Mean Absolute Error (MAE)
-Root Mean Squared Error (RMSE)
-Callbacks
-EarlyStopping
-ReduceLROnPlateau
-Training Parameters
-Epochs: 15
-Batch Size: 64
-Image Size: 128 × 128
-Results
-Mean Absolute Error (MAE)
-Training: ~696K USD
-Validation: ~703K USD
-Root Mean Squared Error (RMSE)
-Training: ~785K USD
-Validation: ~796K USD
-Visualization
+## Categories
 
-Training and validation RMSE curves were plotted across epochs. The model exhibited stable learning behavior with no significant signs of overfitting, indicating effective integration of both image and tabular modalities.
+- World
+- Sports
+- Business
+- Sci/Tech
 
-Task 3: Fine-Tuning BERT for News Topic Classification
-Overview
+## Technologies
 
-This project demonstrates the fine-tuning of a BERT-based transformer model for automated news topic classification. The model categorizes news headlines into one of four classes:
+- TensorFlow
+- Hugging Face Transformers
+- Streamlit
 
-World
-Sports
-Business
-Science & Technology
+## Deployment
 
-The workflow covers data preparation, model fine-tuning, evaluation, model export, and deployment through a Streamlit web application.
-
-Dataset
-
-Dataset: AG News (Hugging Face Datasets)
-
-The objective is to classify news headlines into predefined topic categories using a transformer-based architecture.
-
-Technologies Used
-TensorFlow
-Hugging Face Transformers
-Streamlit
-Data Preprocessing
-Loaded the AG News dataset using the datasets library.
-Tokenized text using bert-base-uncased tokenizer.
-Applied padding and truncation with a maximum sequence length of 128 tokens.
-Converted processed data into TensorFlow-compatible datasets using to_tf_dataset().
-Model Fine-Tuning
-
-A TFBertForSequenceClassification model was initialized with four output classes.
-
-Training Configuration
-Optimizer: Adam
-Learning Rate: 2e-5
-Loss Function: SparseCategoricalCrossentropy
-Metric: Accuracy
-Epochs: 2
-Evaluation
-
-Model performance was assessed using:
-
-Accuracy Score
-
-Measures overall classification correctness.
-
-Weighted F1-Score
-
-Evaluates performance while accounting for class imbalance.
-
-The evaluation results confirmed the effectiveness of the fine-tuned BERT model for news headline classification.
-
-Model Export
-
-The trained model and tokenizer were saved for future inference and deployment.
-
-model.save_pretrained("news_classifier_tf")
-tokenizer.save_pretrained("news_classifier_tf")
-Streamlit Deployment
-
-A lightweight Streamlit application was developed to provide real-time predictions.
-
-Features
-User enters a news headline.
-Headline is automatically tokenized.
-Model predicts the topic category.
-Results are displayed instantly in the browser.
-Supported Categories
-World
-Sports
-Business
-Sci/Tech
-
-This deployment enables users to interact with the fine-tuned BERT model through a simple and user-friendly web interface.
+A Streamlit application allows real-time news headline classification.
